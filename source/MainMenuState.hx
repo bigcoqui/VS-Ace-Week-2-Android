@@ -174,31 +174,17 @@ class MainMenuState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
-			if (controls.UP_P)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
-				changeItem(-1);
-			}
+			selectedSomethin = true;
+			FlxG.sound.play(Paths.sound('confirmMenu'));
+	
+		  if (FlxG.save.data.flashing)
+			  FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
-			else if (controls.DOWN_P)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
-				changeItem(1);
-			}
-
-			if (controls.BACK)
-				FlxG.switchState(new TitleState());
-
-			else if (controls.ACCEPT)
-			{
-				selectedSomethin = true;
-				FlxG.sound.play(Paths.sound('confirmMenu'));
-				
-				if (FlxG.save.data.flashing)
-					FlxFlicker.flicker(magenta, 1.1, 0.15, false);
-
+     for (touch in FlxG.touches.list) {
+       if (touch.justPressed) {
 				menuItems.forEach(function(spr:FlxSprite)
 				{
+				  if (touch.overlaps(spr) && touch.justPressed) {
 					if (curSelected != spr.ID)
 					{
 						FlxTween.tween(spr, {alpha: 0}, 1.3, {
@@ -226,7 +212,24 @@ class MainMenuState extends MusicBeatState
 							});
 						}
 					}
-				});
+				}
+			});
+		}
+  }
+
+			else if (controls.BACK)
+				FlxG.switchState(new TitleState());
+
+			if (controls.UP_P)
+			{
+				FlxG.sound.play(Paths.sound('scrollMenu'));
+				changeItem(-1);
+			}
+
+			else if (controls.DOWN_P)
+			{
+				FlxG.sound.play(Paths.sound('scrollMenu'));
+				changeItem(1);
 			}
 		}
 
