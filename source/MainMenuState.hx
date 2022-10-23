@@ -147,8 +147,6 @@ class MainMenuState extends MusicBeatState
 
 		firstStart = false;
 
-		
-
 		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
 		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0,("Friday Night Funkin: Vs Ace"), 12);
@@ -179,6 +177,18 @@ class MainMenuState extends MusicBeatState
 	
 		  if (FlxG.save.data.flashing)
 			  FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+
+			if (controls.UP_P)
+			{
+				FlxG.sound.play(Paths.sound('scrollMenu'));
+				changeItem(-1);
+			}
+
+			else if (controls.DOWN_P)
+			{
+				FlxG.sound.play(Paths.sound('scrollMenu'));
+				changeItem(1);
+			}
 
      for (touch in FlxG.touches.list) {
        if (touch.justPressed) {
@@ -218,23 +228,8 @@ class MainMenuState extends MusicBeatState
   }
 
 		  else if (controls.BACK)
-		  {
 				FlxG.switchState(new TitleState());
-		  }
-
-			if (controls.UP_P)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
-				changeItem(-1);
-			}
-
-			else if (controls.DOWN_P)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
-				changeItem(1);
-			}
 		}
-
 		super.update(elapsed);
 	}
 	
