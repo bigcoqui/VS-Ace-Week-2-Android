@@ -14,97 +14,100 @@ using StringTools;
 
 class DisclaimerState extends FlxState
 {
-    var selectSprite:FlxSprite;
-    var confirmText:FlxText;
-    var effects:Bool = true;
-    var barProgress:Float = 0;
+  var selectSprite:FlxSprite;
+  var confirmText:FlxText;
+  var effects:Bool = true;
+  var barProgress:Float = 0;
 
-    var loadingBG:FlxSprite;
-    var loadingBarBG:FlxSprite;
-    var loadingBar:FlxBar;
-    var loadingImage:FlxSprite;
-    var continueText:FlxText;
-    var disclaimer:Bool = false;
+  var loadingBG:FlxSprite;
+  var loadingBarBG:FlxSprite;
+  var loadingBar:FlxBar;
+  var loadingImage:FlxSprite;
+  var continueText:FlxText;
+  var disclaimer:Bool = false;
 	var stopspamming:Bool = false;
 
 	static var firstPass:Bool = false;
 
 	override public function create():Void
 	{
-        PlayerSettings.init();
+    PlayerSettings.init();
 		KadeEngineData.initSave();
 		Highscore.load();
 
-        var description1:FlxText = new FlxText(0, 100, 0, "This mod contains different unlockables", 36);
-        description1.setFormat(Paths.font("vcr.ttf"), 36, FlxColor.WHITE);
-        description1.screenCenter(X);
-        var description2:FlxText = new FlxText(0, 150, 0, "that change aspects of the game", 36);
-        description2.setFormat(Paths.font("vcr.ttf"), 36, FlxColor.WHITE);
-        description2.screenCenter(X);
-        var description3:FlxText = new FlxText(0, 200, 0, "and are unlocked in different weeks", 36);
-        description3.setFormat(Paths.font("vcr.ttf"), 36, FlxColor.WHITE);
-        description3.screenCenter(X);
+    var description1:FlxText = new FlxText(0, 100, 0, "This mod contains different unlockables", 36);
+    description1.setFormat(Paths.font("vcr.ttf"), 36, FlxColor.WHITE);
+    description1.screenCenter(X);
+    var description2:FlxText = new FlxText(0, 150, 0, "that change aspects of the game", 36);
+    description2.setFormat(Paths.font("vcr.ttf"), 36, FlxColor.WHITE);
+    description2.screenCenter(X);
+    var description3:FlxText = new FlxText(0, 200, 0, "and are unlocked in different weeks", 36);
+    description3.setFormat(Paths.font("vcr.ttf"), 36, FlxColor.WHITE);
+    description3.screenCenter(X);
 
-        var askText:FlxText = new FlxText(0, 350, 0, "Have you finished Vs.Ace week 1 before?", 36);
-        askText.setFormat(Paths.font("vcr.ttf"), 36, FlxColor.WHITE);
-        askText.screenCenter(X);
+    var askText:FlxText = new FlxText(0, 350, 0, "Have you finished Vs.Ace week 1 before?", 36);
+    askText.setFormat(Paths.font("vcr.ttf"), 36, FlxColor.WHITE);
+    askText.screenCenter(X);
 
-        var description4:FlxText = new FlxText(0, 400, 0, "(Pressing ''yes'' will unlock bonus content from week 1)", 24);
-        description4.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE);
-        description4.screenCenter(X);
+    var description4:FlxText = new FlxText(0, 400, 0, "(Pressing ''yes'' will unlock bonus content from week 1)", 24);
+    description4.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE);
+    description4.screenCenter(X);
 
-        selectSprite = new FlxSprite(460, 495).makeGraphic(140, 75, FlxColor.GRAY);
-        var yes:FlxText = new FlxText(470, 500, "YES", 64);
-        yes.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.WHITE);
-        var no:FlxText = new FlxText(690, 500, "NO", 64);
-        no.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.WHITE);
+    selectSprite = new FlxSprite(460, 495).makeGraphic(140, 75, FlxColor.GRAY);
+    var yes:FlxText = new FlxText(470, 500, "YES", 64);
+    yes.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.WHITE);
+    var no:FlxText = new FlxText(690, 500, "NO", 64);
+    no.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.WHITE);
 
-        confirmText = new FlxText(0, 650, 0, "Press Enter to confirm", 36);
-        confirmText.setFormat(Paths.font("vcr.ttf"), 36, FlxColor.WHITE);
-        confirmText.screenCenter(X);
+    confirmText = new FlxText(0, 650, 0, "Press A to confirm", 36);
+    confirmText.setFormat(Paths.font("vcr.ttf"), 36, FlxColor.WHITE);
+    confirmText.screenCenter(X);
 
-        add(selectSprite);
-        add(description1);
-        add(description2);
-        add(description3);
-        add(description4);
-        add(askText);
-        add(yes);
-        add(no);
-        add(confirmText);
+    add(selectSprite);
+    add(description1);
+    add(description2);
+    add(description3);
+    add(description4);
+    add(askText);
+    add(yes);
+    add(no);
+    add(confirmText);
 
-        loadingBG = new FlxSprite(0, 0).loadGraphic(Paths.image('loading/' + FlxG.random.int(0, 2)));
+    loadingBG = new FlxSprite(0, 0).loadGraphic(Paths.image('loading/' + FlxG.random.int(0, 2)));
 
-        loadingBarBG = new FlxSprite(0, 700).loadGraphic(Paths.image('healthBar', 'shared'));
-        loadingBarBG.screenCenter(X);
+    loadingBarBG = new FlxSprite(0, 700).loadGraphic(Paths.image('healthBar', 'shared'));
+    loadingBarBG.screenCenter(X);
 
-        loadingBar = new FlxBar(loadingBarBG.x + 4, loadingBarBG.y + 4, LEFT_TO_RIGHT, Std.int(loadingBarBG.width - 8), Std.int(loadingBarBG.height - 8), this,
-            'barProgress', 0, 100);
-        loadingBar.numDivisions = 100;
-        loadingBar.createFilledBar(FlxColor.GRAY, FlxColor.LIME);
+    loadingBar = new FlxBar(loadingBarBG.x + 4, loadingBarBG.y + 4, LEFT_TO_RIGHT, Std.int(loadingBarBG.width - 8), Std.int(loadingBarBG.height - 8), this,
+    'barProgress', 0, 100);
+    loadingBar.numDivisions = 100;
+    loadingBar.createFilledBar(FlxColor.GRAY, FlxColor.LIME);
 
-        continueText = new FlxText(0, 650, 0, "Loading", 36);
-        continueText.setFormat(Paths.font("vcr.ttf"), 36, FlxColor.WHITE);
-        continueText.screenCenter(X);
+    continueText = new FlxText(0, 650, 0, "Loading", 36);
+    continueText.setFormat(Paths.font("vcr.ttf"), 36, FlxColor.WHITE);
+    continueText.screenCenter(X);
 
-        loadingBarBG.setPosition(loadingBarBG.x + 0, loadingBarBG.y - 20);
-        loadingBar.setPosition(loadingBar.x + 0, loadingBar.y - 20);
-        continueText.setPosition(continueText.x + 0, continueText.y - 20);
+    loadingBarBG.setPosition(loadingBarBG.x + 0, loadingBarBG.y - 20);
+    loadingBar.setPosition(loadingBar.x + 0, loadingBar.y - 20);
+    continueText.setPosition(continueText.x + 0, continueText.y - 20);
 
-        add(loadingBG);
-        add(loadingBarBG);
-        add(loadingBar);
-        add(continueText);
+    add(loadingBG);
+    add(loadingBarBG);
+    add(loadingBar);
+    add(continueText);
 
-        FileCache.loadFiles();
-        updateLoadingText();
+    FileCache.loadFiles();
+    updateLoadingText();
+
+    #if android
+    addVirtualPad(LEFT_RIGHT, A);
+    #end
+    //vai ter que ser assim F
 
 		super.create();
 	}
 
-
-    public static var fuckYouUpdateLoop:Bool = false;
-
+  public static var fuckYouUpdateLoop:Bool = false;
 
 	override function update(elapsed:Float)
         {
@@ -116,11 +119,11 @@ class DisclaimerState extends FlxState
                 if (barProgress != 100)
                 {
                     barProgress = 100;
-                    continueText.text = "Hit Enter to continue";
+                    continueText.text = "Hit A to continue";
                     continueText.screenCenter(X);
                 }
     
-                if (!disclaimer && (FlxG.keys.justPressed.ENTER || PlayerSettings.player1.controls.ACCEPT))
+                if (!disclaimer && (controls.ACCEPT))
                     {
                         if (firstPass)
                         {
@@ -150,21 +153,21 @@ class DisclaimerState extends FlxState
                     StoryMenuState.characterUnlocked[2] = true; 
                     fuckYouUpdateLoop = true;
                         }
-                if ((FlxG.keys.justPressed.LEFT || PlayerSettings.player1.controls.LEFT_P) && selectSprite.x == 660) 
+                if ((controls.LEFT_P) && selectSprite.x == 660) 
                 {
                     FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
                     selectSprite.x = 460;
                     StoryMenuState.characterUnlocked[1] = true; 
                     StoryMenuState.characterUnlocked[2] = true; 
                 }
-                else if ((FlxG.keys.justPressed.RIGHT || PlayerSettings.player1.controls.RIGHT_P) && selectSprite.x == 460)
+                else if ((controls.RIGHT_P) && selectSprite.x == 460)
                 {
                     FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
                     selectSprite.x = 660;
                     StoryMenuState.characterUnlocked[1] = false; 
                     StoryMenuState.characterUnlocked[2] = false; 
                 }
-                else if (FlxG.keys.justPressed.ENTER || PlayerSettings.player1.controls.ACCEPT)
+                else if (controls.ACCEPT)
                 {
                     FlxG.save.data.characterUnlocked = StoryMenuState.characterUnlocked; 
                     firstPass = true;
@@ -172,7 +175,6 @@ class DisclaimerState extends FlxState
                 }
             }
         }
-
             super.update(elapsed);
         }
     
