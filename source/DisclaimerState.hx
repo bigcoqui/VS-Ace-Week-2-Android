@@ -99,10 +99,9 @@ class DisclaimerState extends FlxState
     FileCache.loadFiles();
     updateLoadingText();
 
-    #if android
+    /*#if android
     addVirtualPad(LEFT_RIGHT, A);
-    #end
-    //vai ter que ser assim F
+    #end depois eu coloco*/
 
 		super.create();
 	}
