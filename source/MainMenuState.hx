@@ -227,11 +227,13 @@ class MainMenuState extends MusicBeatState
 		}
   }
 
-		  else if (controls.BACK)
-				FlxG.switchState(new TitleState());
+		else if (controls.BACK)
+		{
+			FlxG.switchState(new TitleState());
 		}
-		super.update(elapsed);
 	}
+		super.update(elapsed);
+}
 	
 	function goToState()
 	{
